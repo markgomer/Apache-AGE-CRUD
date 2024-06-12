@@ -1,6 +1,6 @@
 import psycopg2
 from DAO import DAO
-import Writer
+from Writer import Writer
 
 # procedures
 # setup AGE
@@ -16,7 +16,7 @@ Dao = DAO(GRAPH_NAME, config);
 connection = Dao.connect()
 
 # create writer object 
-writer = Writer.Writer()
+writer = Writer()
 
 # send test queries
 # "CREATE (n:Person {name: 'Joe'})"
