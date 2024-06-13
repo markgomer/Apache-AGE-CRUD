@@ -11,8 +11,8 @@ class DAO:
     def connect(self):
         try:
             self.ag = age.connect(graph=self.graph_name, dsn=self.config)
-        except:
-            print("Database connection error. Is postgres server running?")
+        except Exception as e:
+            print(f"ERROR: {e}")
         return self.ag
 
     def close_connection(self):
@@ -25,5 +25,6 @@ class DAO:
             self.ag.commit()
             for row in cursor:
                 print("CREATED: ", row[0]) 
-        except:
-            print("Cypher execution error")
+        except Exception as e:
+            print(f"ERROR: {e}")
+
