@@ -13,11 +13,10 @@ try:
     connection = age.connect(graph=GRAPH_NAME, dsn=CONFIG)
     
     # query test
-    query = "CREATE (n:Person {name: 'Maria'})"
+    query = "CREATE (n:Person {name: 'Maria'}) RETURN n"
 
     # send the query to the database
     cursor = connection.execCypher(query)
-    print(cursor)
 
     for row in cursor:
         print("CREATED: ", row[0]) 
