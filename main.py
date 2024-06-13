@@ -26,6 +26,8 @@ try:
 except Exception as e: 
     print(f"Error: {e}") 
     connection.rollback()
+finally:    
+    age.deleteGraph(connection.connection, GRAPH_NAME)
+    cursor.close()
+    connection.close()
     
-age.deleteGraph(connection.connection, GRAPH_NAME)
-connection.close()
