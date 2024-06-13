@@ -12,11 +12,12 @@ class DAO:
         try:
             self.ag = age.connect(graph=self.graph_name, dsn=self.config)
         except:
-            print("Database connected successfully")
+            print("Database connection error. Is postgres server running?")
         return self.ag
 
     def close_connection(self):
         self.ag.close()
+
 
     def execQuery(self, query):
         try:
