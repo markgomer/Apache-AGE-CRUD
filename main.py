@@ -1,12 +1,7 @@
-from DAO import DAO
-from Writer import Writer
+import age
 
-# procedures
-# setup AGE
 GRAPH_NAME = "test_graph"
-
-# get database configuration
-config = (
+CONFIG = (
     "host=127.0.0.1 \
     port=5455 \
     dbname=postgresDB \
@@ -14,21 +9,24 @@ config = (
     password=postgresPW"
 )
 
-# create data access object
-Dao = DAO(GRAPH_NAME, config)
+try:
+    connection = age.connect(graph=GRAPH_NAME, dsn=CONFIG)
+    
+    # query test
+    query = "CREATE (n:Person {name: 'Maria'})"
 
-# connect to the database
-connection = Dao.connect()
+    # send the query to the database
+    cursor = connection.execCypher(query)
+    print(cursor)
 
-# create writer object
-writer = Writer()
+    for row in cursor:
+        print("CREATED: ", row[0]) 
 
-# send test queries
-# "CREATE (n:Person {name: 'Joe'})"
-v_label = "Person"
-v_prop = "{name: 'Joe'}"
-query = writer.create_vertex(v_label, v_prop)
-Dao.execQuery(query)
+    connection.commit()
 
-Dao.close_connection()
-
+except Exception as e: 
+    print(f"Error: {e}") 
+    connection.rollback()
+    
+age.deleteGraph(connection.connection, GRAPH_NAME)
+connection.close()
